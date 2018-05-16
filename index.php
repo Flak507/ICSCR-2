@@ -37,6 +37,45 @@
 
 
   </head>
+  <?php
+		if (isset($_POST['submit'])) {
+		
+			$nombre = $_POST["name"];
+			$email = $_POST["email"];
+      $telefono = $_POST["cellphone"];
+      $direccion = $_POST["address"];
+			$mensaje = $_POST["comment"];
+
+			$asunto ="Contacto desde la web";
+			$destino = "info@icscostarica.com";
+
+
+			$carta =  "De: $nombre \n";
+			$carta .= "Correo: $email\n";
+      $carta .= "Telefono: $telefono\n";
+      $carta .= "Dirección: $direccion\n";
+			$carta .= "Mensaje: $mensaje";
+
+
+			$correo = mail($destino,$asunto,$carta);
+			/*header("Location:index.php");*/
+
+			echo '<div id="confirmacion">
+					<div class ="wrapper-confirm">
+						<img src="images/logo-copy.png"/>
+						<p>Tu correo a sido enviado con éxito!!</p>
+					</div>
+					</div>
+				'; 
+		}
+	?>
+	<script type="text/javascript">
+		$(document).ready(function() {
+    		setTimeout(function() {
+        		$("#confirmacion").fadeOut(1500);
+    		},1000);
+		});
+</script>
   <body id="home" class="homepage">
 
 
@@ -387,7 +426,7 @@
           </div>
           <div class="col-md-12">
             <div id="contact_form" class="text-left">
-              <form  method="post" action="enviar.php">
+            <form  form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF'])?>" method="post" id="formulario">
                 <fieldset>
                   <div class="form-input" >
                     <label for="name" >Nombre：</label>
@@ -418,7 +457,7 @@
                     <textarea cols="40" rows="10" name="comment" id="comment" class="required" required></textarea>
                   </div>
                   <div>
-                    <input type="submit" value="ENVIAR" class="submit">
+                    <input type="submit" value="ENVIAR" class="submit" name="submit">
                   </div>
                 </fieldset>
               </form>
